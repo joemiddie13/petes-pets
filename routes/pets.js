@@ -14,15 +14,15 @@ module.exports = (app) => {
   // CREATE PET
   app.post('/pets', (req, res) => {
     var pet = new Pet(req.body);
-
     pet.save()
-      .then((pet) => {
-        res.redirect(`/pets/${pet._id}`);
-      })
-      .catch((err) => {
-        // Handle Errors
-      }) ;
-  });
+        .then((pet) => {
+            res.send({ pet: pet });
+        })
+        .catch((err) => {
+            res.status(400).send(err.errors);
+        });
+    });
+
 
   // SHOW PET
   app.get('/pets/:id', (req, res) => {
@@ -40,8 +40,6 @@ module.exports = (app) => {
     });
   });
   
-
-
   // EDIT PET
   app.get('/pets/:id/edit', (req, res) => {
     Pet.findById(req.params.id).exec((err, pet) => {
