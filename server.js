@@ -61,4 +61,12 @@ app.use((err, req, res, next) => {
   res.render('error');
 });
 
+
+// SEND EMAIL
+const user = {
+  email: 'YOUR@EMAIL.com',
+  name: 'Emily',
+  age: '43'
+};
+
 module.exports = app;
