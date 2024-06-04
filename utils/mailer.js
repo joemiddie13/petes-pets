@@ -18,7 +18,7 @@ module.exports.sendMail = (user, req, res) => {
     // send an email to the user's email with a provided template
     nodemailerMailgun.sendMail({
         from: 'no-reply@example.com',
-        to: user.email, // An array if you have multiple recipients.
+        to: user.email,
         subject: 'Pet Purchased!',
         template: {
             name: 'email.handlebars',

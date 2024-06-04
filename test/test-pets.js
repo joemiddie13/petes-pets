@@ -4,7 +4,7 @@ const server = require('../server');
 const should = chai.should();
 const Pet = require('../models/pet');
 
-const fido =     {
+const fido = {
     "name": "Norman",
     "species": "Greyhound",
     "birthday": "2008-11-11",
@@ -16,7 +16,7 @@ const fido =     {
 
 chai.use(chaiHttp);
 
-describe('Pets', ()  => {
+describe('Pets', () => {
 
   after(() => { 
     Pet.deleteMany({$or: [{name: 'Norman'}, {name: 'Spider'}] }).exec((err, pets) => {
@@ -124,6 +124,19 @@ describe('Pets', ()  => {
         .end((err, res) => {
           res.should.have.status(200);
           res.should.be.html;
+          done();
+        });
+  });
+
+  // TEST JSON RESPONSE
+  it('should list ALL pets on / GET with JSON response', (done) => {
+    chai.request(server)
+        .get('/')
+        .set('Content-Type', 'application/json')
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('object');
           done();
         });
   });
